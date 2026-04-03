@@ -1,8 +1,1058 @@
-const firebaseConfig = {
-  apiKey:            "AIzaSyAi9McbAhkH0tzFL-lxoizwLpwuDquv1LA",
-  authDomain:        "folakemi-timilehin-2026.firebaseapp.com",
-  projectId:         "folakemi-timilehin-2026",
-  storageBucket:     "folakemi-timilehin-2026.firebasestorage.app",
-  messagingSenderId: "146175582751",
-  appId:             "1:146175582751:web:731bdfb377fecaaa5deb2a"
-};
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Folakemi & Timilehin — 08.04.2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Tenor+Sans&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --white: #fffef9;
+      --pink: #f2c4ce;
+      --pink-mid: #e8a0b0;
+      --pink-deep: #c97a90;
+      --lilac: #d4c1e8;
+      --lilac-mid: #b89fd4;
+      --lilac-deep: #8b6bb1;
+      --cream: #fdf6f0;
+      --gold: #c9a96e;
+      --text: #2c1f2e;
+      --text-mid: #5a4560;
+      --text-light: #9b8aa4;
+      --border: rgba(180,155,212,0.25);
+      --glass: rgba(255,254,249,0.75);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ═══════════════════════════════
+       ACCESS GATE
+    ═══════════════════════════════ */
+    #gate {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--cream);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 2rem;
+    }
+    #gate .gate-icon { font-size: 2.5rem; margin-bottom: 1.2rem; }
+    #gate h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem; font-weight: 400;
+      margin-bottom: .6rem;
+    }
+    #gate p { color: var(--text-light); font-size: .9rem; line-height: 1.6; }
+
+    /* ═══════════════════════════════
+       HERO SECTION
+    ═══════════════════════════════ */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      overflow: hidden;
+      padding: 2rem;
+    }
+
+    /* Animated petal background */
+    .petal-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(242,196,206,0.45) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(212,193,232,0.4) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 40% at 60% 30%, rgba(242,196,206,0.2) 0%, transparent 50%),
+        var(--cream);
+    }
+
+    /* Floating petals */
+    .petal {
+      position: absolute;
+      border-radius: 50% 0 50% 0;
+      opacity: 0;
+      animation: floatPetal linear infinite;
+      pointer-events: none;
+    }
+    @keyframes floatPetal {
+      0%   { transform: translateY(100vh) rotate(0deg);   opacity: 0; }
+      10%  { opacity: .6; }
+      90%  { opacity: .3; }
+      100% { transform: translateY(-20vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* Couple photo frame */
+    .couple-frame {
+      position: relative; z-index: 2;
+      display: flex; gap: 1.2rem;
+      margin-bottom: 2.5rem;
+      animation: fadeUp .9s ease .2s both;
+    }
+    .photo-oval {
+      width: 150px; height: 190px;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      overflow: hidden;
+      border: 3px solid rgba(255,255,255,.8);
+      box-shadow: 0 12px 40px rgba(139,107,177,.2), 0 0 0 1px var(--border);
+      background: linear-gradient(160deg, var(--pink) 0%, var(--lilac) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+      transition: transform .4s ease;
+      position: relative;
+    }
+    .photo-oval:hover { transform: scale(1.03) rotate(-1deg); }
+    .photo-oval img {
+      width: 100%; height: 100%; object-fit: cover;
+      position: absolute; inset: 0;
+    }
+    .photo-oval-right { transform: rotate(2deg); }
+    .photo-oval-right:hover { transform: rotate(2deg) scale(1.03); }
+
+    /* Photo upload hint */
+    .photo-hint {
+      position: absolute; bottom: -24px; left: 50%;
+      transform: translateX(-50%);
+      font-size: .65rem; color: var(--text-light);
+      letter-spacing: .05em; white-space: nowrap;
+      background: var(--cream); padding: 2px 8px;
+      border-radius: 20px; border: 1px solid var(--border);
+    }
+
+    /* Hero text */
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center;
+      animation: fadeUp .9s ease .4s both;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: .72rem; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-names {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 9vw, 5.5rem);
+      font-weight: 400; line-height: 1.05;
+      color: var(--text);
+    }
+    .hero-names .bride { color: var(--pink-deep); font-style: italic; }
+    .hero-names .groom { color: var(--lilac-deep); }
+    .hero-names .amp {
+      display: block;
+      font-style: italic; font-size: .55em;
+      color: var(--gold); margin: .1em 0;
+    }
+
+    .hero-date-bar {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1rem; margin: 1.8rem 0 1rem;
+    }
+    .hero-date-line { width: 60px; height: 1px; background: var(--gold); opacity: .5; }
+    .hero-date {
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: .8rem; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--text-mid);
+    }
+
+    .hero-venue {
+      font-size: .82rem; color: var(--text-light);
+      line-height: 1.7; margin-bottom: 2.5rem;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: linear-gradient(135deg, var(--lilac-deep), var(--pink-deep));
+      color: #fff;
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: .8rem; letter-spacing: .2em;
+      text-transform: uppercase;
+      border: none; border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 8px 30px rgba(139,107,177,.35);
+      transition: all .3s ease;
+      text-decoration: none;
+    }
+    .hero-cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(139,107,177,.45);
+    }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column;
+      align-items: center; gap: .4rem;
+      animation: fadeUp 1s ease 1.2s both;
+    }
+    .scroll-hint span { font-size: .65rem; letter-spacing: .2em; color: var(--text-light); text-transform: uppercase; }
+    .scroll-arrow {
+      width: 20px; height: 20px;
+      border-right: 1px solid var(--text-light);
+      border-bottom: 1px solid var(--text-light);
+      transform: rotate(45deg);
+      animation: bounce 1.5s ease infinite;
+    }
+    @keyframes bounce { 0%,100%{transform:rotate(45deg) translateY(0)} 50%{transform:rotate(45deg) translateY(4px)} }
+
+    /* ═══════════════════════════════
+       FORM SECTION
+    ═══════════════════════════════ */
+    #form-section {
+      position: relative;
+      padding: 5rem 1.5rem 6rem;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      text-align: center;
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: .7rem; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: .8rem;
+    }
+    .section-title {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 400; margin-bottom: .6rem;
+    }
+    .section-sub {
+      text-align: center;
+      font-size: .88rem; color: var(--text-light);
+      line-height: 1.7; margin-bottom: 3rem;
+    }
+
+    /* Step progress */
+    .step-track {
+      display: flex; align-items: center;
+      justify-content: center; gap: 0;
+      margin-bottom: 2.5rem;
+    }
+    .step-node {
+      display: flex; flex-direction: column; align-items: center; gap: .4rem;
+      position: relative; z-index: 1;
+    }
+    .step-circle {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Tenor Sans', sans-serif; font-size: .75rem;
+      border: 1.5px solid var(--border);
+      background: var(--cream); color: var(--text-light);
+      transition: all .4s ease;
+    }
+    .step-node.active .step-circle {
+      background: linear-gradient(135deg, var(--lilac-deep), var(--pink-deep));
+      border-color: transparent; color: #fff;
+      box-shadow: 0 4px 16px rgba(139,107,177,.4);
+    }
+    .step-node.done .step-circle {
+      background: var(--pink-mid); border-color: transparent; color: #fff;
+    }
+    .step-label { font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; color: var(--text-light); }
+    .step-node.active .step-label { color: var(--lilac-deep); }
+    .step-connector {
+      width: 60px; height: 1px;
+      background: var(--border); margin-bottom: 1.2rem;
+    }
+    .step-connector.done { background: var(--pink-mid); }
+
+    /* Cards */
+    .form-card {
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 8px 48px rgba(139,107,177,.08);
+      display: none;
+    }
+    .form-card.active {
+      display: block;
+      animation: slideIn .5s cubic-bezier(.22,.68,0,1.2) forwards;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(24px) scale(.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .card-head { margin-bottom: 2rem; }
+    .card-head h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 400; margin-bottom: .3rem;
+    }
+    .card-head p { font-size: .85rem; color: var(--text-light); line-height: 1.6; }
+
+    /* Form fields */
+    .fgroup { margin-bottom: 1.3rem; }
+    .fgroup label {
+      display: block; font-family: 'Tenor Sans', sans-serif;
+      font-size: .68rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--text-mid); margin-bottom: .5rem;
+    }
+    .fgroup input, .fgroup textarea {
+      width: 100%; padding: .85rem 1.1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: rgba(255,255,255,.7);
+      font-family: 'Lato', sans-serif; font-size: .95rem;
+      color: var(--text); outline: none;
+      transition: border-color .25s, box-shadow .25s, background .25s;
+    }
+    .fgroup input:focus, .fgroup textarea:focus {
+      border-color: var(--lilac-mid);
+      background: rgba(255,255,255,.95);
+      box-shadow: 0 0 0 4px rgba(139,107,177,.1);
+    }
+    .fgroup textarea { resize: none; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    /* Relationship selector */
+    .rel-intro { font-size: .82rem; color: var(--text-light); margin-bottom: 1.2rem; line-height: 1.5; }
+
+    .rel-list { display: flex; flex-direction: column; gap: .6rem; }
+    .rel-radio { display: none; }
+    .rel-item {
+      display: flex; align-items: center;
+      padding: 1rem 1.2rem;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all .25s ease;
+      background: rgba(255,255,255,.5);
+      position: relative; overflow: hidden;
+    }
+    .rel-item::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, var(--lilac-deep), var(--pink-deep));
+      opacity: 0; border-radius: 0 4px 4px 0;
+      transition: opacity .25s;
+    }
+    .rel-radio:checked + .rel-item {
+      border-color: var(--lilac-mid);
+      background: linear-gradient(135deg, rgba(212,193,232,.15), rgba(242,196,206,.1));
+      box-shadow: 0 4px 20px rgba(139,107,177,.1);
+    }
+    .rel-radio:checked + .rel-item::before { opacity: 1; }
+
+    .rel-icon { font-size: 1.3rem; margin-right: .9rem; flex-shrink: 0; }
+    .rel-text { flex: 1; }
+    .rel-name { font-size: .9rem; font-weight: 400; color: var(--text); display: block; }
+    .rel-desc { font-size: .72rem; color: var(--text-light); display: block; margin-top: .1rem; }
+    .rel-badge {
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: .65rem; letter-spacing: .05em;
+      padding: .25rem .6rem;
+      border-radius: 20px;
+      background: rgba(139,107,177,.1);
+      color: var(--lilac-deep);
+      white-space: nowrap;
+    }
+    .rel-radio:checked + .rel-item .rel-badge {
+      background: linear-gradient(135deg, var(--lilac-deep), var(--pink-deep));
+      color: #fff;
+    }
+
+    /* Upload zone */
+    .upload-block { margin-bottom: 2rem; }
+    .upload-block-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: .8rem;
+    }
+    .upload-block-title {
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: .82rem; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--text-mid); display: flex; align-items: center; gap: .5rem;
+    }
+    .upload-quota-pill {
+      font-size: .72rem; padding: .2rem .7rem;
+      border-radius: 20px; background: rgba(139,107,177,.08);
+      color: var(--lilac-deep); border: 1px solid var(--border);
+    }
+    .quota-used { color: var(--pink-deep); font-weight: 400; }
+
+    .drop-zone {
+      border: 2px dashed rgba(180,155,212,.4);
+      border-radius: 16px;
+      padding: 1.8rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      transition: all .3s ease;
+      background: rgba(255,255,255,.4);
+    }
+    .drop-zone:hover, .drop-zone.drag-over {
+      border-color: var(--lilac-deep);
+      background: rgba(212,193,232,.12);
+    }
+    .drop-zone input[type="file"] {
+      position: absolute; inset: 0; opacity: 0;
+      cursor: pointer; width: 100%; height: 100%;
+    }
+    .drop-icon-wrap { font-size: 2rem; margin-bottom: .5rem; }
+    .drop-text { font-size: .82rem; color: var(--text-light); }
+    .drop-text strong { color: var(--lilac-deep); }
+
+    /* Preview thumbnails */
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+      gap: .5rem; margin-top: .8rem;
+    }
+    .thumb {
+      position: relative; aspect-ratio: 1;
+      border-radius: 10px; overflow: hidden;
+      background: var(--border);
+      border: 1.5px solid rgba(255,255,255,.8);
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+    .thumb img, .thumb video { width: 100%; height: 100%; object-fit: cover; }
+    .thumb .rm {
+      position: absolute; top: 3px; right: 3px;
+      background: rgba(0,0,0,.55); color: #fff;
+      border: none; border-radius: 50%;
+      width: 18px; height: 18px; font-size: .6rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+    .thumb .vbadge {
+      position: absolute; bottom: 3px; left: 3px;
+      background: rgba(0,0,0,.5); color: #fff;
+      font-size: .55rem; padding: 1px 4px; border-radius: 3px;
+    }
+
+    /* Progress */
+    .upload-progress { display: none; margin-top: 1.2rem; }
+    .prog-bar-bg {
+      height: 5px; border-radius: 3px;
+      background: var(--border); overflow: hidden;
+    }
+    .prog-bar-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--lilac-deep), var(--pink-deep));
+      border-radius: 3px; transition: width .4s ease;
+    }
+    .prog-label { font-size: .75rem; color: var(--text-light); margin-top: .4rem; text-align: center; }
+
+    /* Buttons */
+    .btn-row { display: flex; flex-direction: column; gap: .7rem; margin-top: 1.8rem; }
+    .btn {
+      display: block; width: 100%; padding: 1rem;
+      border: none; border-radius: 12px;
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: .8rem; letter-spacing: .15em; text-transform: uppercase;
+      cursor: pointer; transition: all .25s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--lilac-deep) 0%, var(--pink-deep) 100%);
+      color: #fff;
+      box-shadow: 0 6px 24px rgba(139,107,177,.3);
+    }
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(139,107,177,.45);
+    }
+    .btn-primary:disabled { opacity: .6; cursor: not-allowed; }
+    .btn-ghost {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--text-light);
+    }
+    .btn-ghost:hover { border-color: var(--lilac-mid); color: var(--lilac-deep); }
+
+    /* Error messages */
+    .err { color: #b03060; font-size: .76rem; margin-top: .3rem; display: none; }
+    .has-err input, .has-err textarea { border-color: #e07090 !important; }
+    .form-err {
+      background: rgba(176,48,96,.07); border: 1px solid rgba(176,48,96,.2);
+      border-radius: 10px; padding: .7rem 1rem;
+      font-size: .8rem; color: #b03060;
+      margin-bottom: 1rem; display: none;
+    }
+
+    /* Success screen */
+    #step-success {
+      text-align: center; padding: 3rem 2rem;
+    }
+    .success-ring {
+      width: 90px; height: 90px; margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--lilac), var(--pink));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem;
+      animation: popIn .6s cubic-bezier(.22,.68,0,1.5) forwards;
+    }
+    @keyframes popIn { from{transform:scale(0)} to{transform:scale(1)} }
+    .success-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 400; margin-bottom: .7rem;
+    }
+    .success-sub { font-size: .9rem; color: var(--text-light); line-height: 1.7; }
+    .success-names {
+      font-family: 'Playfair Display', serif;
+      font-style: italic; color: var(--lilac-deep);
+    }
+
+    /* ═══════════════════════════════
+       DECORATIVE DIVIDER
+    ═══════════════════════════════ */
+    .ornament {
+      text-align: center; font-size: 1.3rem;
+      opacity: .35; letter-spacing: .5rem;
+      margin: 2rem 0;
+    }
+
+    /* ═══════════════════════════════
+       FOOTER
+    ═══════════════════════════════ */
+    footer {
+      text-align: center; padding: 2rem;
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: .68rem; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--text-light);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ═══════════════════════════════
+       ANIMATIONS
+    ═══════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════ */
+    @media (max-width: 520px) {
+      .grid2 { grid-template-columns: 1fr; }
+      .step-connector { width: 32px; }
+      .form-card { padding: 1.8rem 1.3rem; }
+      .photo-oval { width: 120px; height: 152px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ ACCESS GATE ═══ -->
+<div id="gate">
+  <div class="gate-icon">🔒</div>
+  <h2>Private page</h2>
+  <p>Please scan the QR code at the<br/>wedding venue to access this page.</p>
+</div>
+
+<!-- ═══════════════════════════════════════
+     HERO
+═══════════════════════════════════════ -->
+<section id="hero">
+  <div class="petal-bg"></div>
+
+  <!-- Floating petals (generated by JS) -->
+  <div id="petals"></div>
+
+  <!-- Couple photos -->
+  <div class="couple-frame">
+    <div class="photo-oval photo-oval-left" id="photo-bride">
+      <!-- Replace the emoji below with: <img src="bride.jpg" alt="Folakemi" /> -->
+      🌸
+      <span class="photo-hint">Folakemi</span>
+    </div>
+    <div class="photo-oval photo-oval-right" id="photo-groom">
+      <!-- Replace the emoji below with: <img src="groom.jpg" alt="Timilehin" /> -->
+      🤵🏾
+      <span class="photo-hint">Timilehin</span>
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Join us in celebrating</p>
+
+    <h1 class="hero-names">
+      <span class="bride">Folakemi</span>
+      <span class="amp">&amp;</span>
+      <span class="groom">Timilehin</span>
+    </h1>
+
+    <div class="hero-date-bar">
+      <div class="hero-date-line"></div>
+      <span class="hero-date">Tuesday · 8th April 2026</span>
+      <div class="hero-date-line"></div>
+    </div>
+
+    <p class="hero-venue">
+      Canaanland Event Centre<br/>
+      10 Limson Road, Ojodu Berger, Lagos
+    </p>
+
+    <a href="#form-section" class="hero-cta">Share Your Memories ↓</a>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FORM SECTION
+═══════════════════════════════════════ -->
+<section id="form-section">
+  <p class="section-label">For the couple</p>
+  <h2 class="section-title">Share your moments</h2>
+  <p class="section-sub">Your photos and videos will be treasured forever.<br/>Fill in a few quick details to get started.</p>
+
+  <!-- Step tracker -->
+  <div class="step-track">
+    <div class="step-node active" id="sn1">
+      <div class="step-circle">1</div>
+      <span class="step-label">You</span>
+    </div>
+    <div class="step-connector" id="sc1"></div>
+    <div class="step-node" id="sn2">
+      <div class="step-circle">2</div>
+      <span class="step-label">Relation</span>
+    </div>
+    <div class="step-connector" id="sc2"></div>
+    <div class="step-node" id="sn3">
+      <div class="step-circle">3</div>
+      <span class="step-label">Upload</span>
+    </div>
+  </div>
+
+  <!-- STEP 1: About you -->
+  <div class="form-card active" id="step-1">
+    <div class="card-head">
+      <h3>Hello, guest 🌺</h3>
+      <p>A few quick details so Folakemi & Timilehin know who's sharing these memories.</p>
+    </div>
+
+    <div class="fgroup" id="fg-name">
+      <label>Your full name *</label>
+      <input type="text" id="inp-name" placeholder="e.g. Amaka Okafor" />
+      <span class="err">Please enter your name.</span>
+    </div>
+    <div class="grid2">
+      <div class="fgroup">
+        <label>Phone number</label>
+        <input type="tel" id="inp-phone" placeholder="+234 800 000 0000" />
+      </div>
+      <div class="fgroup">
+        <label>City / Country</label>
+        <input type="text" id="inp-city" placeholder="Lagos, Nigeria" />
+      </div>
+    </div>
+    <div class="fgroup">
+      <label>A short wedding wish <span style="font-size:.7rem;text-transform:none;letter-spacing:0;color:var(--text-light)">(optional)</span></label>
+      <textarea id="inp-wish" rows="2" placeholder="Wishing you both endless love and laughter…"></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="toStep2()">Continue →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Relationship -->
+  <div class="form-card" id="step-2">
+    <div class="card-head">
+      <h3>How do you know them? 💛</h3>
+      <p>Choose the option that best describes your relationship. This determines how many photos and videos you can share.</p>
+    </div>
+
+    <div class="rel-list" id="rel-list">
+      <!-- populated by JS -->
+    </div>
+    <div class="form-err" id="rel-err">Please select your relationship to the couple.</div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="toStep3()">Continue →</button>
+      <button class="btn btn-ghost" onclick="toStep(1)">← Back</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Upload -->
+  <div class="form-card" id="step-3">
+    <div class="card-head">
+      <h3>Upload your memories 📸</h3>
+      <p id="upload-desc">Share your photos and videos with the couple.</p>
+    </div>
+
+    <!-- Photos -->
+    <div class="upload-block">
+      <div class="upload-block-head">
+        <span class="upload-block-title">📷 Photos</span>
+        <span class="upload-quota-pill"><span class="quota-used" id="photo-used">0</span> / <span id="photo-max">0</span> photos</span>
+      </div>
+      <div class="drop-zone" id="photo-drop">
+        <input type="file" id="photo-input" accept="image/*" multiple onchange="addFiles('photo',this.files)" />
+        <div class="drop-icon-wrap">🖼️</div>
+        <p class="drop-text">Tap to add photos · or drag & drop<br/><small>JPG · PNG · HEIC · WEBP</small></p>
+      </div>
+      <div class="preview-grid" id="photo-prev"></div>
+    </div>
+
+    <!-- Videos -->
+    <div class="upload-block">
+      <div class="upload-block-head">
+        <span class="upload-block-title">🎬 Videos</span>
+        <span class="upload-quota-pill"><span class="quota-used" id="video-used">0</span> / <span id="video-max">0</span> videos</span>
+      </div>
+      <div class="drop-zone" id="video-drop">
+        <input type="file" id="video-input" accept="video/*" multiple onchange="addFiles('video',this.files)" />
+        <div class="drop-icon-wrap">🎥</div>
+        <p class="drop-text">Tap to add videos · or drag & drop<br/><small>MP4 · MOV · AVI</small></p>
+      </div>
+      <div class="preview-grid" id="video-prev"></div>
+    </div>
+
+    <div class="form-err" id="upload-err">Please add at least one photo or video.</div>
+
+    <div class="upload-progress" id="prog-wrap">
+      <div class="prog-bar-bg"><div class="prog-bar-fill" id="prog-fill"></div></div>
+      <p class="prog-label" id="prog-label">Preparing upload…</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" id="submit-btn" onclick="doUpload()">Upload & Submit 🎉</button>
+      <button class="btn btn-ghost" onclick="toStep(2)">← Back</button>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div id="step-success" style="display:none;">
+    <div class="success-ring">💐</div>
+    <h2 class="success-title">Thank you!</h2>
+    <p class="success-sub">
+      <span class="success-names">Folakemi & Timilehin</span> will cherish<br/>
+      these memories for a lifetime.<br/><br/>
+      Now go enjoy the celebration! ✨
+    </p>
+  </div>
+
+  <div class="ornament">✦ ✦ ✦</div>
+</section>
+
+<footer>
+  Made with love · Folakemi &amp; Timilehin · 08 · 04 · 2026
+</footer>
+
+<!-- ═══════════════════════════════════════
+     FIREBASE
+═══════════════════════════════════════ -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getStorage, ref, uploadBytesResumable, getDownloadURL }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+  const firebaseConfig = {
+    apiKey:            "AIzaSyAi9McbAhkH0tzFL-lxoizwLpwuDquv1LA",
+    authDomain:        "folakemi-timilehin-2026.firebaseapp.com",
+    projectId:         "folakemi-timilehin-2026",
+    storageBucket:     "folakemi-timilehin-2026.firebasestorage.app",
+    messagingSenderId: "146175582751",
+    appId:             "1:146175582751:web:731bdfb377fecaaa5deb2a"
+  };
+
+  const app  = initializeApp(firebaseConfig);
+  const db   = getFirestore(app);
+  const stor = getStorage(app);
+  window._fb = { db, stor, collection, addDoc, serverTimestamp, ref, uploadBytesResumable, getDownloadURL };
+</script>
+
+<!-- ═══════════════════════════════════════
+     APP LOGIC
+═══════════════════════════════════════ -->
+<script>
+  /* ─── CONFIG ─── */
+  const TOKEN = "wedding-fola-timi-2026";
+
+  const RELS = [
+    { id:"direct_family",   icon:"👨‍👩‍👧‍👦", label:"Direct Family",          desc:"Parents, Siblings, Children",          photos:25, videos:5 },
+    { id:"extended_family", icon:"👪",       label:"Extended Family",        desc:"Cousins, Aunts, Uncles, In-laws",      photos:20, videos:4 },
+    { id:"close_friends",   icon:"💛",       label:"Close Friends",          desc:"Best friends, Childhood friends",      photos:18, videos:4 },
+    { id:"friends",         icon:"🤝",       label:"Friends",                desc:"General friends of the couple",        photos:15, videos:3 },
+    { id:"church",          icon:"⛪",       label:"Church / Faith Family",  desc:"Church members, Fellowship",           photos:15, videos:3 },
+    { id:"school",          icon:"🎓",       label:"School / Alumni",        desc:"Classmates, School friends",           photos:14, videos:3 },
+    { id:"colleagues",      icon:"💼",       label:"Colleagues / Work",      desc:"Workmates, Professional network",      photos:12, videos:2 },
+    { id:"neighbours",      icon:"🏘️",      label:"Neighbours / Community", desc:"Neighbours, Community members",        photos:10, videos:2 },
+    { id:"other",           icon:"🌟",       label:"Other / Well-wisher",    desc:"Any other connection to the couple",   photos:8,  videos:1 },
+  ];
+
+  /* ─── STATE ─── */
+  let step = 1, rel = null;
+  let photos = [], videos = [];
+
+  /* ─── TOKEN GATE ─── */
+  function checkToken() {
+    const p = new URLSearchParams(location.search);
+    if (p.get("token") === TOKEN) document.getElementById("gate").style.display = "none";
+  }
+
+  /* ─── FLOATING PETALS ─── */
+  function spawnPetals() {
+    const wrap = document.getElementById("petals");
+    const colors = ["#f2c4ce","#d4c1e8","#f8dce3","#e8d4f5","#fce4ec"];
+    for (let i = 0; i < 14; i++) {
+      const p = document.createElement("div");
+      p.className = "petal";
+      const size = 8 + Math.random() * 14;
+      p.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${Math.random()*100}%;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        animation-duration:${8+Math.random()*12}s;
+        animation-delay:${Math.random()*10}s;
+      `;
+      wrap.appendChild(p);
+    }
+  }
+
+  /* ─── BUILD REL LIST ─── */
+  function buildRels() {
+    document.getElementById("rel-list").innerHTML = RELS.map(r => `
+      <div>
+        <input type="radio" name="rel" id="r_${r.id}" value="${r.id}" class="rel-radio" onchange="pickRel('${r.id}')"/>
+        <label class="rel-item" for="r_${r.id}">
+          <span class="rel-icon">${r.icon}</span>
+          <span class="rel-text">
+            <span class="rel-name">${r.label}</span>
+            <span class="rel-desc">${r.desc}</span>
+          </span>
+          <span class="rel-badge">${r.photos}📷 ${r.videos}🎬</span>
+        </label>
+      </div>
+    `).join('');
+  }
+
+  function pickRel(id) {
+    rel = RELS.find(r => r.id === id);
+    document.getElementById("rel-err").style.display = "none";
+  }
+
+  /* ─── NAVIGATION ─── */
+  function updateTrack(s) {
+    [1,2,3].forEach(i => {
+      const n = document.getElementById("sn"+i);
+      n.classList.remove("active","done");
+      if (i < s) n.classList.add("done");
+      else if (i === s) n.classList.add("active");
+    });
+    [1,2].forEach(i => {
+      const c = document.getElementById("sc"+i);
+      c.classList.toggle("done", i < s);
+    });
+  }
+
+  function toStep(n) {
+    document.getElementById("step-"+step)?.classList.remove("active");
+    step = n;
+    document.getElementById("step-"+step).classList.add("active");
+    updateTrack(n);
+    document.getElementById("form-section").scrollIntoView({ behavior:"smooth" });
+  }
+
+  function toStep2() {
+    const name = document.getElementById("inp-name").value.trim();
+    if (!name) {
+      const fg = document.getElementById("fg-name");
+      fg.classList.add("has-err");
+      fg.querySelector(".err").style.display = "block";
+      return;
+    }
+    document.getElementById("fg-name").classList.remove("has-err");
+    document.getElementById("fg-name").querySelector(".err").style.display = "none";
+    toStep(2);
+  }
+
+  function toStep3() {
+    if (!rel) { document.getElementById("rel-err").style.display = "block"; return; }
+    document.getElementById("upload-desc").textContent =
+      `As ${rel.label}, you can share up to ${rel.photos} photos and ${rel.videos} videos.`;
+    document.getElementById("photo-max").textContent = rel.photos;
+    document.getElementById("video-max").textContent = rel.videos;
+    photos = []; videos = [];
+    document.getElementById("photo-prev").innerHTML = "";
+    document.getElementById("video-prev").innerHTML = "";
+    refreshCounts();
+    toStep(3);
+  }
+
+  /* ─── FILE HANDLING ─── */
+  function addFiles(type, files) {
+    const arr = type === "photo" ? photos : videos;
+    const lim = type === "photo" ? rel.photos : rel.videos;
+    const err = document.getElementById("upload-err");
+    err.style.display = "none";
+
+    for (const f of files) {
+      if (arr.length >= lim) {
+        err.textContent = `You've reached the ${lim} ${type} limit for your relationship tier.`;
+        err.style.display = "block";
+        break;
+      }
+      arr.push(f);
+      renderThumb(type, f, arr.length - 1);
+    }
+    refreshCounts();
+  }
+
+  function renderThumb(type, file, idx) {
+    const grid = document.getElementById(type+"-prev");
+    const wrap = document.createElement("div");
+    wrap.className = "thumb"; wrap.id = `th-${type}-${idx}`;
+
+    if (type === "photo") {
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(file);
+      wrap.appendChild(img);
+    } else {
+      const vid = document.createElement("video");
+      vid.src = URL.createObjectURL(file); vid.muted = true;
+      const b = document.createElement("span");
+      b.className = "vbadge"; b.textContent = "▶";
+      wrap.appendChild(vid); wrap.appendChild(b);
+    }
+
+    const rm = document.createElement("button");
+    rm.className = "rm"; rm.textContent = "×";
+    rm.onclick = () => removeFile(type, idx);
+    wrap.appendChild(rm);
+    grid.appendChild(wrap);
+  }
+
+  function removeFile(type, idx) {
+    const arr = type === "photo" ? photos : videos;
+    arr.splice(idx, 1);
+    // Re-render all
+    const grid = document.getElementById(type+"-prev");
+    grid.innerHTML = "";
+    if (type === "photo") photos = [];
+    else videos = [];
+    arr.forEach(f => {
+      const newArr = type === "photo" ? photos : videos;
+      newArr.push(f);
+      renderThumb(type, f, newArr.length - 1);
+    });
+    refreshCounts();
+  }
+
+  function refreshCounts() {
+    document.getElementById("photo-used").textContent = photos.length;
+    document.getElementById("video-used").textContent = videos.length;
+  }
+
+  /* ─── UPLOAD ─── */
+  async function doUpload() {
+    const err = document.getElementById("upload-err");
+    err.style.display = "none";
+    if (!photos.length && !videos.length) {
+      err.textContent = "Please add at least one photo or video before submitting.";
+      err.style.display = "block"; return;
+    }
+
+    const { db, stor, collection, addDoc, serverTimestamp, ref, uploadBytesResumable, getDownloadURL } = window._fb;
+    const allFiles = [
+      ...photos.map(f => ({ file:f, type:"photo" })),
+      ...videos.map(f => ({ file:f, type:"video" }))
+    ];
+    const total = allFiles.length;
+    let done = 0;
+
+    const progWrap = document.getElementById("prog-wrap");
+    const progFill = document.getElementById("prog-fill");
+    const progLabel = document.getElementById("prog-label");
+    progWrap.style.display = "block";
+    document.getElementById("submit-btn").disabled = true;
+
+    const name  = document.getElementById("inp-name").value.trim();
+    const phone = document.getElementById("inp-phone").value.trim();
+    const city  = document.getElementById("inp-city").value.trim();
+    const wish  = document.getElementById("inp-wish").value.trim();
+    const gid   = "guest_" + Date.now() + "_" + Math.random().toString(36).slice(2,7);
+    const urls  = [];
+
+    for (let i = 0; i < allFiles.length; i++) {
+      const { file, type } = allFiles[i];
+      const ext  = file.name.split('.').pop();
+      const path = `uploads/${gid}/${type}/${i+1}_${Date.now()}.${ext}`;
+      const sref = ref(stor, path);
+      const task = uploadBytesResumable(sref, file);
+
+      await new Promise((res, rej) => {
+        task.on("state_changed",
+          snap => {
+            const pct = Math.round((done / total + snap.bytesTransferred / snap.totalBytes / total) * 100);
+            progFill.style.width = pct + "%";
+            progLabel.textContent = `Uploading ${i+1} of ${total}…`;
+          },
+          rej,
+          async () => {
+            const url = await getDownloadURL(task.snapshot.ref);
+            urls.push({ url, type, name: file.name, size: file.size });
+            done++;
+            progFill.style.width = Math.round((done/total)*100) + "%";
+            res();
+          }
+        );
+      });
+    }
+
+    await addDoc(collection(db, "guests"), {
+      name, phone, city, wish,
+      relationship: rel.id,
+      relationshipLabel: rel.label,
+      photoCount: photos.length,
+      videoCount: videos.length,
+      files: urls,
+      guestId: gid,
+      createdAt: serverTimestamp()
+    });
+
+    progLabel.textContent = "All done! ✨";
+    showSuccess();
+  }
+
+  function showSuccess() {
+    document.getElementById("step-3").classList.remove("active");
+    document.getElementById("step-success").style.display = "block";
+    document.querySelector(".step-track").style.display = "none";
+    document.getElementById("form-section").scrollIntoView({ behavior:"smooth" });
+  }
+
+  /* ─── DRAG & DROP ─── */
+  ["photo","video"].forEach(type => {
+    const zone = document.getElementById(type+"-drop");
+    zone.addEventListener("dragover", e => { e.preventDefault(); zone.classList.add("drag-over"); });
+    zone.addEventListener("dragleave", () => zone.classList.remove("drag-over"));
+    zone.addEventListener("drop", e => {
+      e.preventDefault(); zone.classList.remove("drag-over");
+      addFiles(type, e.dataTransfer.files);
+    });
+  });
+
+  /* ─── INIT ─── */
+  checkToken();
+  buildRels();
+  spawnPetals();
+</script>
+</body>
+</html>
