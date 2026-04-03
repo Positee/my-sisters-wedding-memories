@@ -652,8 +652,7 @@
     <div class="grid2">
       <div class="fgroup">
         <label>Phone number</label>
-        <input type="tel" id="inp-phone" placeholder="+234 800 000 0000" />
-      </div>
+<input type="tel" id="inp-phone" placeholder="+234 800 000 0000" maxlength="15" oninput="this.value = this.value.replace(/[^0-9+]/g, '')" />      </div>
       <div class="fgroup">
         <label>City / Country</label>
         <input type="text" id="inp-city" placeholder="Lagos, Nigeria" />
