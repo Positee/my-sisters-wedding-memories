@@ -28,7 +28,7 @@
       transform: scale(0.95);
     }
     .intro-pic.show {
-      animation: flashPic 1s ease-in-out forwards;
+      animation: flashPic 2s ease-in-out forwards;
     }
     @keyframes flashPic {
       0%   { opacity: 0; transform: scale(0.95); }
@@ -605,12 +605,12 @@
   <div class="couple-frame">
     <div class="photo-oval photo-oval-left" id="photo-bride">
       <!-- Replace the emoji below with: <img src="bride.jpg" alt="Folakemi" /> -->
-      <img src="ld.jpg" alt="Folakemi" />
+      <img src="https://firebasestorage.googleapis.com/v0/b/folakemi-timilehin-2026.firebasestorage.app/o/ld.jpg?alt=media&token=3123002e-1282-4af4-b310-f423d5243ecc" alt="Folakemi" />
       <span class="photo-hint">Folakemi</span>
     </div>
     <div class="photo-oval photo-oval-right" id="photo-groom">
       <!-- Replace the emoji below with: <img src="groom.jpg" alt="Timilehin" /> -->
-      <img src="ld2.jpg" alt="Timilehin" />
+      <img src="https://firebasestorage.googleapis.com/v0/b/folakemi-timilehin-2026.firebasestorage.app/o/ld2.jpg?alt=media&token=74361633-54bc-4e4d-8bd1-bd538dece0f1" alt="Timilehin" />
       <span class="photo-hint">Timilehin</span>
     </div>
   </div>
@@ -679,7 +679,7 @@
 
     <div class="fgroup" id="fg-name">
       <label>Your full name *</label>
-      <input type="text" id="inp-name" placeholder="e.g. Amaka Okafor" />
+      <input type="text" id="inp-name" placeholder="e.g. Ayokunle Feyi-Akinbile" />
       <span class="err">Please enter your name.</span>
     </div>
     <div class="grid2">
@@ -1125,7 +1125,7 @@
 </script>
 
 <script>
-  window.addEventListener('DOMContentLoaded', () => {
+  window.addEventListener('load', () => {
     const introScreen = document.getElementById('intro-screen');
     const pics = document.querySelectorAll('.intro-pic');
     const urlParams = new URLSearchParams(location.search);
@@ -1139,7 +1139,7 @@
           setTimeout(() => {
             current++;
             playNext();
-          }, 900); // Shows each picture for just under 1 second
+          }, 2000); // Show each pic for 2 seconds
         } else {
           // Fade out the black screen and remove it
           introScreen.style.opacity = "0";
