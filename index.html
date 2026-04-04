@@ -8,7 +8,34 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Tenor+Sans&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
 
+  
   <style>
+    /* ═══════════════════════════════
+       INTRO ANIMATION
+    ═══════════════════════════════ */
+    #intro-screen {
+      position: fixed; inset: 0; z-index: 99999;
+      background: #000000; /* Dark background like the video */
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.8s ease;
+    }
+    .intro-pic {
+      position: absolute;
+      max-width: 85%; max-height: 80vh;
+      object-fit: cover;
+      border-radius: 12px;
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    .intro-pic.show {
+      animation: flashPic 1s ease-in-out forwards;
+    }
+    @keyframes flashPic {
+      0%   { opacity: 0; transform: scale(0.95); }
+      20%  { opacity: 1; transform: scale(1); }
+      80%  { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(1.05); }
+    }
     :root {
       --white: #fffef9;
       --pink: #f2c4ce;
@@ -552,6 +579,12 @@
 </head>
 <body>
 
+<div id="intro-screen">
+  <img src="https://firebasestorage.googleapis.com/v0/b/folakemi-timilehin-2026.firebasestorage.app/o/intro1.jpg?alt=media&token=16d2bb3e-345a-4d03-bf8f-2a1035a7448d" class="intro-pic" />
+  <img src="https://firebasestorage.googleapis.com/v0/b/folakemi-timilehin-2026.firebasestorage.app/o/intro2.jpg?alt=media&token=47629cbd-aeaf-411b-98b1-3a8daf6a5ebc" class="intro-pic" />
+  <img src="https://firebasestorage.googleapis.com/v0/b/folakemi-timilehin-2026.firebasestorage.app/o/intro3.jpeg?alt=media&token=bad84743-5eb4-4452-952c-79814d94db77" class="intro-pic" />
+</div>
+
 <!-- ═══ ACCESS GATE ═══ -->
 <div id="gate">
   <div class="gate-icon">🔒</div>
@@ -572,12 +605,12 @@
   <div class="couple-frame">
     <div class="photo-oval photo-oval-left" id="photo-bride">
       <!-- Replace the emoji below with: <img src="bride.jpg" alt="Folakemi" /> -->
-      🌸
+      <img src="ld.jpg" alt="Folakemi" />
       <span class="photo-hint">Folakemi</span>
     </div>
     <div class="photo-oval photo-oval-right" id="photo-groom">
       <!-- Replace the emoji below with: <img src="groom.jpg" alt="Timilehin" /> -->
-      🤵🏾
+      <img src="ld2.jpg" alt="Timilehin" />
       <span class="photo-hint">Timilehin</span>
     </div>
   </div>
@@ -617,7 +650,7 @@
 <section id="form-section">
   <p class="section-label">For the couple</p>
   <h2 class="section-title">Share your moments</h2>
-  <p class="section-sub">Your photos and videos will be treasured forever.<br/>Fill in a few quick details to get started.</p>
+  <p class="section-sub">Your photos and short videos will be treasured forever.<br/>Fill in a few quick details to get started.</p>
 
   <!-- Step tracker -->
   <div class="step-track">
@@ -659,7 +692,7 @@
       </div>
     </div>
     <div class="fgroup">
-      <label>A short wedding wish <span style="font-size:.7rem;text-transform:none;letter-spacing:0;color:var(--text-light)">(optional)</span></label>
+      <label>A short wedding wish or prayer <span style="font-size:.7rem;text-transform:none;letter-spacing:0;color:var(--text-light)">(optional)</span></label>
       <textarea id="inp-wish" rows="2" placeholder="Wishing you both endless love and laughter…"></textarea>
     </div>
 
@@ -672,7 +705,7 @@
   <div class="form-card" id="step-2">
     <div class="card-head">
       <h3>How do you know them? 💛</h3>
-      <p>Choose the option that best describes your relationship. This determines how many photos and videos you can share.</p>
+      <p>Choose the option that best describes your relationship. Please keep videos under 1 minute or shorter.</p>
     </div>
 
     <div class="rel-list" id="rel-list">
@@ -716,7 +749,7 @@
       <div class="drop-zone" id="video-drop">
         <input type="file" id="video-input" accept="video/*" multiple onchange="addFiles('video',this.files)" />
         <div class="drop-icon-wrap">🎥</div>
-        <p class="drop-text">Tap to add videos · or drag & drop<br/><small>MP4 · MOV · AVI</small></p>
+<p class="drop-text">Tap to add short videos · or drag & drop<br/><small>MP4 · MOV · AVI</small><br/><br/><span style="color: var(--lilac-deep); font-size: .75rem;">⏳ Please keep videos under 1 min</span></p>
       </div>
       <div class="preview-grid" id="video-prev"></div>
     </div>
@@ -745,7 +778,45 @@
     </p>
   </div>
 
+  <div class="form-err" id="submit-err">An error occurred while submitting. Please try again.</div>
   <div class="ornament">✦ ✦ ✦</div>
+</section>
+
+<section id="registry-section" style="padding: 2rem 1.5rem 6rem; max-width: 680px; margin: 0 auto; text-align: center;">
+  <p class="section-label">A Token of Love</p>
+  <h2 class="section-title">Gifts</h2>
+  <p class="section-sub">Instead of physical items, we would graciously accept cash gifts to help us start our new journey together.</p>
+
+  <div class="form-card active" style="margin-bottom: 1.5rem; text-align: left;">
+    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: .5rem; color: var(--lilac-deep);">🇳🇬 Nigeria / Naira ₦</h3>
+    <p style="font-size: .95rem; line-height: 1.8; color: var(--text-mid);">
+      <strong>Account Name:</strong> Tehingbola Oluwafolakemi<br/>
+      <strong>Account Number:</strong> 7804211177<br/>
+      <strong>Bank:</strong> Providus
+    </p>
+  </div>
+
+  <div class="form-card active" style="margin-bottom: 1.5rem; text-align: left;">
+    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: .5rem; color: var(--lilac-deep);">🇺🇸 United States / Dollar $</h3>
+    <p style="font-size: .95rem; line-height: 1.8; color: var(--text-mid);">
+      <strong>Account Name:</strong> Oluwafolakemi Tehingbola<br/>
+      <strong>Account Number:</strong> 216659854036<br/>
+      <strong>Wire / ACH Routing:</strong> 101019644<br/>
+      <strong>Account Type:</strong> Checking<br/>
+      <strong>Bank Name:</strong> Lead Bank<br/>
+      <strong>Bank Address:</strong> 1801 Main St., Kansas City, MO 64108
+    </p>
+  </div>
+
+  <div class="form-card active" style="text-align: left;">
+    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: .5rem; color: var(--lilac-deep);">🇬🇧 United Kingdom / Pound £</h3>
+    <p style="font-size: .95rem; line-height: 1.8; color: var(--text-mid);">
+      <strong>Account Name:</strong> Oluwatimilehin Alli-Balogun<br/>
+      <strong>Account Number:</strong> 61349317<br/>
+      <strong>Sort Code:</strong> 40-47-69<br/>
+      <strong>Bank:</strong> First Direct
+    </p>
+  </div>
 </section>
 
 <footer>
@@ -830,13 +901,12 @@
     document.getElementById("rel-list").innerHTML = RELS.map(r => `
       <div>
         <input type="radio" name="rel" id="r_${r.id}" value="${r.id}" class="rel-radio" onchange="pickRel('${r.id}')"/>
-        <label class="rel-item" for="r_${r.id}">
+       <label class="rel-item" for="r_${r.id}">
           <span class="rel-icon">${r.icon}</span>
           <span class="rel-text">
             <span class="rel-name">${r.label}</span>
             <span class="rel-desc">${r.desc}</span>
           </span>
-          <span class="rel-badge">${r.photos}📷 ${r.videos}🎬</span>
         </label>
       </div>
     `).join('');
@@ -1052,6 +1122,37 @@
   checkToken();
   buildRels();
   spawnPetals();
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const introScreen = document.getElementById('intro-screen');
+    const pics = document.querySelectorAll('.intro-pic');
+    const urlParams = new URLSearchParams(location.search);
+    
+    // Only play intro if they have the secret token (so it doesn't cover the lock screen)
+    if (urlParams.get("token") === TOKEN) {
+      let current = 0;
+      function playNext() {
+        if (current < pics.length) {
+          pics[current].classList.add('show');
+          setTimeout(() => {
+            current++;
+            playNext();
+          }, 900); // Shows each picture for just under 1 second
+        } else {
+          // Fade out the black screen and remove it
+          introScreen.style.opacity = "0";
+          setTimeout(() => introScreen.remove(), 800);
+        }
+      }
+      // Start the flash sequence
+      setTimeout(playNext, 300);
+    } else {
+      // If locked, hide the intro screen immediately
+      introScreen.style.display = "none";
+    }
+  });
 </script>
 </body>
 </html>
