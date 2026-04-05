@@ -377,8 +377,9 @@
     <div class="login-icon">🔐</div>
     <h2>Admin Access</h2>
     <p>Folakemi & Timilehin · Wedding Gallery</p>
+    <input type="email" id="email-input" placeholder="Admin email" />
     <input type="password" id="pw-input" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()" />
-    <p class="login-err" id="login-err">Incorrect password. Try again.</p>
+    <p class="login-err" id="login-err">Incorrect email or password.</p>
     <button class="btn-login" onclick="doLogin()">Enter Gallery</button>
   </div>
 </div>
@@ -482,6 +483,8 @@
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
   import { getStorage, ref, deleteObject }
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+  import { getAuth, signInWithEmailAndPassword }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey:            "AIzaSyAi9McbAhkH0tzFL-lxoizwLpwuDquv1LA",
@@ -495,27 +498,36 @@
   const app  = initializeApp(firebaseConfig);
   const db   = getFirestore(app);
   const stor = getStorage(app);
-  window._fb = { db, stor, collection, getDocs, deleteDoc, doc, query, orderBy, ref, deleteObject };
+  const auth = getAuth(app);
+  window._fb = { db, stor, auth, signInWithEmailAndPassword, collection, getDocs, deleteDoc, doc, query, orderBy, ref, deleteObject };
 </script>
 
 <script>
   /* ─── ADMIN PASSWORD ─── */
   const ADMIN_PW = "fola-timi-admin-2026"; // ← CHANGE THIS to something memorable
 
-  /* ─── STATE ─── */
+ /* ─── STATE ─── */
   let allGuests = [];
   let currentFilter = "all";
   let selectedGuest = null;
 
   /* ─── LOGIN ─── */
-  function doLogin() {
+  async function doLogin() {
+    const email = document.getElementById("email-input").value;
     const pw = document.getElementById("pw-input").value;
-    if (pw === ADMIN_PW) {
+    const { auth, signInWithEmailAndPassword } = window._fb;
+    
+    document.getElementById("login-err").style.display = "none";
+    document.querySelector(".btn-login").textContent = "Verifying...";
+
+    try {
+      await signInWithEmailAndPassword(auth, email, pw);
       document.getElementById("login-overlay").style.display = "none";
       loadGuests();
-    } else {
+    } catch(e) {
+      document.getElementById("login-err").textContent = "Invalid email or password.";
       document.getElementById("login-err").style.display = "block";
-      document.getElementById("pw-input").value = "";
+      document.querySelector(".btn-login").textContent = "Enter Gallery";
     }
   }
 
